@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This file contains job definitions in schema version 2.0 format -->
+
+<job-scheduling-data xmlns="http://quartznet.sourceforge.net/JobSchedulingData" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.0">
+
+  <processing-directives>
+    <overwrite-existing-data>true</overwrite-existing-data>
+  </processing-directives>
+
+  <schedule>
+    <!--<job>
+      <name>CatergoryTask</name>
+      <group>JobGroup</group>
+      <job-type>Felix.Bet365.NETCore.Crawler.Tasks.CatergoryTask, Felix.Bet365.NETCore.Crawler</job-type>
+      <durable>true</durable>
+      <recover>false</recover>
+    </job>
+    <trigger>
+      <simple>
+        <name>CatergoryTask.Trigger</name>
+        <group>triggerGroup</group>
+        <description>Simple trigger to Parser</description>
+        <job-name>CatergoryTask</job-name>
+        <job-group>JobGroup</job-group>
+        <misfire-instruction>SmartPolicy</misfire-instruction>
+        <repeat-count>-1</repeat-count>
+        <repeat-interval>30000</repeat-interval>
+      </simple>
+    </trigger>-->
+    
+    <!--<job>
+      <name>LeagueTask</name>
+      <group>JobGroup</group>
+      <job-type>Felix.Bet365.NETCore.Crawler.Tasks.LeagueTask, Felix.Bet365.NETCore.Crawler</job-type>
+      <durable>true</durable>
+      <recover>false</recover>
+    </job>
+    <trigger>
+      <simple>
+        <name>LeagueTask.Trigger</name>
+        <group>triggerGroup</group>
+        <description>Simple trigger to Parser</description>
+        <job-name>LeagueTask</job-name>
+        <job-group>JobGroup</job-group>
+        <misfire-instruction>SmartPolicy</misfire-instruction>
+        <repeat-count>-1</repeat-count>
+        <repeat-interval>30000</repeat-interval>
+      </simple>
+    </trigger>-->
+    
+    <job>
+      <name>MatchTask</name>
+      <group>JobGroup</group>
+      <job-type>Felix.Bet365.NETCore.Crawler.Tasks.MatchTask, Felix.Bet365.NETCore.Crawler</job-type>
+      <durable>true</durable>
+      <recover>false</recover>
+    </job>
+    <trigger>
+      <simple>
+        <name>MatchTask.Trigger</name>
+        <group>triggerGroup</group>
+        <description>Simple trigger to Parser</description>
+        <job-name>MatchTask</job-name>
+        <job-group>JobGroup</job-group>
+        <misfire-instruction>SmartPolicy</misfire-instruction>
+        <repeat-count>-1</repeat-count>
+        <repeat-interval>30000</repeat-interval>
+      </simple>
+    </trigger>
+
+
+  </schedule>
+</job-scheduling-data>

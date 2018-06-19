@@ -1,0 +1,9 @@
+E:\Quartz\Felix.Bet365.Crawler\RaceDB\bin\Debug\netcoreapp2.0\RaceDB.deps.json
+E:\Quartz\Felix.Bet365.Crawler\RaceDB\bin\Debug\netcoreapp2.0\RaceDB.dll
+E:\Quartz\Felix.Bet365.Crawler\RaceDB\bin\Debug\netcoreapp2.0\RaceDB.pdb
+E:\Quartz\Felix.Bet365.Crawler\RaceDB\obj\Debug\netcoreapp2.0\RaceDB.csproj.CoreCompileInputs.cache
+E:\Quartz\Felix.Bet365.Crawler\RaceDB\obj\Debug\netcoreapp2.0\RaceDB.AssemblyInfoInputs.cache
+E:\Quartz\Felix.Bet365.Crawler\RaceDB\obj\Debug\netcoreapp2.0\RaceDB.AssemblyInfo.cs
+E:\Quartz\Felix.Bet365.Crawler\RaceDB\obj\Debug\netcoreapp2.0\RaceDB.dll
+E:\Quartz\Felix.Bet365.Crawler\RaceDB\obj\Debug\netcoreapp2.0\RaceDB.pdb
+E:\Quartz\Felix.Bet365.Crawler\RaceDB\obj\Debug\netcoreapp2.0\RaceDB.csprojResolveAssemblyReference.cache

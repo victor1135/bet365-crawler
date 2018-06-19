@@ -1,0 +1,9 @@
+﻿{
+  "Bet365Url": {
+    "RaceUrl": {
+      "CountryUrl": "https://mobile.bet365.com/V6/Sport/Splash/SplashPartial.aspx?key={0}&scfv=212&scfm=2&iscode=TWD&isocode=TW&lng=1&zone=3&sst=0&apptype=&appversion=&lvl=1",
+      "TotalRaceUrl": "https://mobile.bet365.com/V6/sport/coupon/coupon.aspx?zone=3&isocode=TW&tzi=1&key={0}&ip=0&gn=0&cid=1&lng=1&ct=212&clt=9996&tid=0&ot=2&pk=1",
+      "RaceDetailUrl": "https://mobile.bet365.com/V6/sport/coupon/coupon.aspx?zone=3&isocode=TW&tzi=1&key={0}&ip=0&gn=0&cid=1&lng=1&ct=212&clt=9996&ot=2"
+    }
+  }
+}
