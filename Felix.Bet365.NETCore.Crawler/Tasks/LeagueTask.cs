@@ -52,7 +52,7 @@ namespace Felix.Bet365.NETCore.Crawler.Tasks
 
                 foreach (var key in categoryKeys)
                 {
-                    var totalLeagueUrl = _settings.Bet365Url.TotalLeagueUrl;
+                    var totalLeagueUrl = _settings.Bet365.Url.TotalLeagueUrl;
                     var totalLeagueHtml = await _engine.LoadHtml(string.Format(totalLeagueUrl, key.CategoryKey.Trim()), JobTimeout);
                     var attrs = HtmlHandler.GetImplement("TotalLeague", totalLeagueHtml).GetsAttributes(_totalLeagueFilter);
                     var values = HtmlHandler.GetImplement("TotalLeague", totalLeagueHtml).Gets(_totalLeagueValueFilter);

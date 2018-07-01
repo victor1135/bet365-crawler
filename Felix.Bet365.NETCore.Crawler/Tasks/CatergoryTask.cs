@@ -48,7 +48,7 @@ namespace Felix.Bet365.NETCore.Crawler.Tasks
             {
 
                 var raceDB = scope.ServiceProvider.GetService<RaceDB.Models.RaceDBContext>();
-                var totalCatergoryUrl = _settings.Bet365Url.TotalCatergoryUrl;
+                var totalCatergoryUrl = _settings.Bet365.Url.TotalCatergoryUrl;
                 var totalCatergoryHtml = await _engine.LoadHtml(totalCatergoryUrl, JobTimeout);
                 var attrs = HtmlHandler.GetImplement("TotalCatergory", totalCatergoryHtml).GetsAttributes(_totalCounrtyFilter);
                 var values = HtmlHandler.GetImplement("TotalCatergory", totalCatergoryHtml).Gets(_totalCounrtyFilter);

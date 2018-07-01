@@ -1,3 +1,8 @@
 Felix.Bet365.Crawler/bin/
 Felix.Bet365.Crawler/obj/Debug/Felix.Bet365.Crawler.csproj.CoreCompileInputs.cache
 Felix.Bet365.Crawler/obj/
+Felix.Bet365.NETCore.Crawler/.local-chromium/
+Felix.Bet365.NETCore.Crawler/.vscode/launch.json
+RaceDB/obj/Debug/netcoreapp2.0/RaceDB.csprojAssemblyReference.cache
+Felix.Bet365.NETCore.Crawler/.vscode/tasks.json
+.vs/Felix.Bet365.Crawler/v15/Server/sqlite3/db.lock

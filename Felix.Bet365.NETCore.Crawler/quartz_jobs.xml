@@ -65,7 +65,7 @@
         <job-group>JobGroup</job-group>
         <misfire-instruction>SmartPolicy</misfire-instruction>
         <repeat-count>-1</repeat-count>
-        <repeat-interval>30000</repeat-interval>
+        <repeat-interval>30000000</repeat-interval>
       </simple>
     </trigger>
 

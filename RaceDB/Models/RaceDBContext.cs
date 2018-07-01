@@ -40,6 +40,12 @@ namespace RaceDB.Models
                 entity.Property(e => e.LeagueName)
                     .IsRequired()
                     .HasColumnType("nchar(100)");
+
+                entity.HasOne(d => d.Category)
+                    .WithMany(p => p.League)
+                    .HasForeignKey(d => d.CategoryId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_League_Category");
             });
 
             modelBuilder.Entity<Match>(entity =>
@@ -63,6 +69,18 @@ namespace RaceDB.Models
                     .HasColumnType("nchar(200)");
 
                 entity.Property(e => e.SportId).HasColumnName("SportID");
+
+                entity.HasOne(d => d.Category)
+                    .WithMany(p => p.Match)
+                    .HasForeignKey(d => d.CategoryId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Match_Category");
+
+                entity.HasOne(d => d.League)
+                    .WithMany(p => p.Match)
+                    .HasForeignKey(d => d.LeagueId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Match_League");
             });
         }
     }

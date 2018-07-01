@@ -18,5 +18,8 @@ namespace RaceDB.Models
         public string AwayCompetitorName { get; set; }
         public DateTimeOffset CreateDate { get; set; }
         public DateTimeOffset UpdateDate { get; set; }
+
+        public Category Category { get; set; }
+        public League League { get; set; }
     }
 }
