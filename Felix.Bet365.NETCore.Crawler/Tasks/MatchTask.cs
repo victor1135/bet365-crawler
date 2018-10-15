@@ -2,6 +2,7 @@
 using Felix.Bet365.NETCore.Crawler.Engine;
 using Felix.Bet365.NETCore.Crawler.Enum;
 using Felix.Bet365.NETCore.Crawler.Handler;
+using Felix.Bet365.NETCore.Crawler.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,6 +11,7 @@ using Microsoft.Extensions.Options;
 using PuppeteerSharp;
 using PuppeteerSharp.Mobile;
 using Quartz;
+using RedisConfig;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,12 +37,15 @@ namespace Felix.Bet365.NETCore.Crawler.Tasks
 
         private AppSettings _settings;
 
-        public MatchTask(IBaseEngine engine, ILogger<CatergoryTask> logger, IOptions<AppSettings> settings, IServiceScopeFactory services)
+        private readonly IRedisConnectionFactory _fact;
+
+        public MatchTask(IBaseEngine engine, ILogger<CatergoryTask> logger, IOptions<AppSettings> settings, IServiceScopeFactory services, IRedisConnectionFactory factory)
         {
             serviceScopeFactory = services;
             _engine = (HttpClientEngine)engine;
             _logger = logger;
             _settings = settings.Value;
+            _fact = factory; 
         }
 
         protected override async Task TaskAsync(CancellationToken cancellationToken)
@@ -75,12 +80,14 @@ namespace Felix.Bet365.NETCore.Crawler.Tasks
                                              MatchKey = a.Value.Where(x => x.Key == "data-fixtureid").FirstOrDefault().Value,
                                              MatchValue = b.Value
                                          });
-
+                    var redis = new RedisVoteService<int>(this._fact);
+                    var date = Convert.ToDateTime(rawDate).ToString("yyyyMMdd");
+                    
                     foreach (var match in matchDataList)
                     {
                         var matchData = HtmlHandler.GetImplement("matchData", match.MatchValue).Gets(_matchCompetitor);
                         var matchDate = HtmlHandler.GetImplement("matchDate", match.MatchValue).Get(_matchDate);
-                        var gameStartDate = new DateTimeOffset(Convert.ToDateTime(matchDate + " " + rawDate), new TimeSpan(-4, 0, 0));
+                        var gameStartDate = new DateTimeOffset(Convert.ToDateTime(matchDate + " " + rawDate), new TimeSpan(1, 0, 0));
 
                         RaceDB.Models.Match matchModel = new RaceDB.Models.Match();
                         var existMatch = raceDB.Match.Where(x => x.MatchKey == match.MatchKey && x.StartDateTime == gameStartDate).FirstOrDefault();
@@ -97,7 +104,7 @@ namespace Felix.Bet365.NETCore.Crawler.Tasks
                         matchModel.CategoryId = league.CategoryId;
                         matchModel.HomeCompetitorName = homeCompetitor;
                         matchModel.AwayCompetitorName = awayCompetitor;
-                        matchModel.Status = 0;
+                        matchModel.Status = 2;
                         matchModel.InPlay = false;
                         matchModel.SportId = 0;
                         matchModel.StartDateTime = gameStartDate;
@@ -111,6 +118,12 @@ namespace Felix.Bet365.NETCore.Crawler.Tasks
                         }
                         raceDB.SaveChanges();
                     }
+                    if(redis.GetList($"{date}:matches") == null)
+                    {
+                        var matchList = raceDB.Match.Where(x => x.StartDateTime.ToString("yyyyMMdd") == date).Select(x => x.MatchId).ToList();
+                        redis.SaveList($"{date}:matches", matchList);
+                    }
+
                 }
             }
             return null;
@@ -155,15 +168,17 @@ namespace Felix.Bet365.NETCore.Crawler.Tasks
             await page.GoToAsync(_settings.Bet365.Url.MainPage.ToString(), waitUntil);
             var waitOption = new WaitForSelectorOptions
             {
-                Timeout = 10000,
+                Timeout = 20000,
                 Hidden = true
             };
             var preLoadOuter = await page.WaitForXPathAsync(_settings.Bet365.ElementXpath.PreLoader, waitOption);
             waitOption.Hidden = false;
             var selectSport = await page.WaitForXPathAsync(_settings.Bet365.ElementXpath.Soccer, waitOption);
+            Thread.Sleep(5000);
             await selectSport.ClickAsync();
 
             var selectLeague = await page.WaitForXPathAsync("//*[@data-sportskey='"+leagueKey.Trim()+"']", waitOption);
+            Thread.Sleep(1000);
             await selectLeague.ClickAsync();
             //Thread.Sleep(2000);
             var selectMatch = await page.WaitForXPathAsync("//*[@data-fixtureid]", waitOption);

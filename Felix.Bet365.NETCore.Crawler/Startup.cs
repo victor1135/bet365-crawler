@@ -17,6 +17,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Quartz;
 using Quartz.Impl;
+using RedisConfig;
 
 namespace Felix.Bet365.NETCore.Crawler
 {
@@ -39,6 +40,15 @@ namespace Felix.Bet365.NETCore.Crawler
             services.AddLogging();
             services.AddMvc();
             services.AddQuartz();
+            services.Configure<RedisConfiguration>(Configuration.GetSection("redis"));
+
+            services.AddDistributedRedisCache(options =>
+            {
+                options.InstanceName = Configuration.GetValue<string>("redis:name");
+                options.Configuration = Configuration.GetValue<string>("redis:host");
+            });
+
+            services.AddSingleton<IRedisConnectionFactory, RedisConnectionFactory>();
             //services.AddTransient<CatergoryTask>();
         }
 

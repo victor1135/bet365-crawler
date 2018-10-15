@@ -35,10 +35,12 @@ namespace Felix.Bet365.NETCore.Crawler
             services.AddSingleton<ISchedulerFactory, StdSchedulerFactory>();
             //services.AddTransient<IBaseEngine, PhantomJsCloud>();
             services.AddTransient<IBaseEngine, HttpClientEngine>();
+            services.AddSingleton<PuppeteerEngine>();
             services.AddTransient<IJobFactory, JobFactory>();
             services.AddTransient<CatergoryTask>();
             services.AddTransient<LeagueTask>();
             services.AddTransient<MatchTask>();
+            services.AddTransient<OddsTask>();
             services.AddSingleton(async provider =>
             {
                 var consoleLog = provider.GetService<ILogProvider>();

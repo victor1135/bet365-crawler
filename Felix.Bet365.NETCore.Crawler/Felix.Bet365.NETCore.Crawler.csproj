@@ -3,19 +3,19 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Remove="AppLogging\**"/>
-    <Content Remove="AppLogging\**"/>
-    <EmbeddedResource Remove="AppLogging\**"/>
-    <None Remove="AppLogging\**"/>
+    <Compile Remove="AppLogging\**" />
+    <Content Remove="AppLogging\**" />
+    <EmbeddedResource Remove="AppLogging\**" />
+    <None Remove="AppLogging\**" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Remove="Handler\LoaderHandler.cs"/>
+    <Compile Remove="Handler\LoaderHandler.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Remove="quartz.config"/>
+    <Content Remove="quartz.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Remove="quartz_jobs.xml"/>
+    <None Remove="quartz_jobs.xml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="quartz_jobs.xml">
@@ -23,28 +23,29 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Handler\"/>
-    <Folder Include="wwwroot\"/>
+    <Folder Include="Handler\" />
+    <Folder Include="wwwroot\" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="HtmlAgilityPack" Version="1.8.1"/>
-    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.6"/>
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.0.3"/>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.0.3"/>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.3"/>
-    <PackageReference Include="NLog" Version="4.5.3"/>
-    <PackageReference Include="NLog.Config" Version="4.5.3"/>
-    <PackageReference Include="NLog.Web.AspNetCore" Version="4.5.2"/>
-    <PackageReference Include="Quartz" Version="3.0.4"/>
-    <PackageReference Include="Quartz.Jobs" Version="3.0.4"/>
-    <PackageReference Include="Quartz.Plugins" Version="3.0.4"/>
-    <PackageReference Include="Quartz.Serialization.Json" Version="3.0.4"/>
-    <PackageReference Include="PuppeteerSharp" Version="1.1.0"/>
-    <PackageReference Include="StackExchange.Redis" Version="1.2.6"/>
-    <PackageReference Include="Redis-64" Version="3.0.503"/>
+    <PackageReference Include="HtmlAgilityPack" Version="1.8.1" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    <PackageReference Include="NLog" Version="4.5.3" />
+    <PackageReference Include="NLog.Config" Version="4.5.3" />
+    <PackageReference Include="NLog.Web.AspNetCore" Version="4.5.2" />
+    <PackageReference Include="Quartz" Version="3.0.4" />
+    <PackageReference Include="Quartz.Jobs" Version="3.0.4" />
+    <PackageReference Include="Quartz.Plugins" Version="3.0.4" />
+    <PackageReference Include="Quartz.Serialization.Json" Version="3.0.4" />
+    <PackageReference Include="PuppeteerSharp" Version="1.1.0" />
+    <PackageReference Include="StackExchange.Redis" Version="2.0.0-alpha.87" />
+    <PackageReference Include="Redis-64" Version="3.0.503" />
   </ItemGroup>
   <ItemGroup>
-    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.3"/>
+    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.3" />
   </ItemGroup>
   <ItemGroup>
     <None Include="quartz.config">
@@ -52,8 +53,8 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\RaceDB\RaceDB.csproj"/>
-    <ProjectReference Include="..\..\RedisConfiguration\RedisConfig.csproj"/>
+    <ProjectReference Include="..\RaceDB\RaceDB.csproj" />
+    <ProjectReference Include="..\RedisConfiguration\RedisConfig.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="QuartzStartup.cs">

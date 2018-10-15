@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using PuppeteerSharp;
 using Quartz;
 using System;
 using System.Collections.Generic;
@@ -24,14 +25,14 @@ namespace Felix.Bet365.NETCore.Crawler.Tasks
         private Func<XPathHandler, XPathHandler> _elementFilter = element => element.Find(TagEnum.Div, "@data-nav='couponLink'");
         private Func<XPathHandler, XPathHandler> _totalCounrtyFilter = element => element.Find(TagEnum.H3, "@data-sportskey");
 
-        private HttpClientEngine _engine;
+        private PuppeteerEngine _engine;
 
         private AppSettings _settings;
 
-        public CatergoryTask(IBaseEngine engine, ILogger<CatergoryTask> logger, IOptions<AppSettings> settings, IServiceScopeFactory services)
+        public CatergoryTask(PuppeteerEngine engine, ILogger<CatergoryTask> logger, IOptions<AppSettings> settings, IServiceScopeFactory services)
         {
             serviceScopeFactory = services;
-            _engine = (HttpClientEngine)engine;
+            _engine = engine;
             _logger = logger;
             _settings = settings.Value;
         }
@@ -48,8 +49,21 @@ namespace Felix.Bet365.NETCore.Crawler.Tasks
             {
 
                 var raceDB = scope.ServiceProvider.GetService<RaceDB.Models.RaceDBContext>();
-                var totalCatergoryUrl = _settings.Bet365.Url.TotalCatergoryUrl;
-                var totalCatergoryHtml = await _engine.LoadHtml(totalCatergoryUrl, JobTimeout);
+                var page  = await _engine.newPage();
+                await page.GoToAsync(_settings.Bet365.Url.MainPage.ToString());
+                var waitOption = new WaitForSelectorOptions
+                {
+                    Timeout = 30000,
+                    Hidden = true
+                };
+                var preLoadOuter = await page.WaitForXPathAsync(_settings.Bet365.ElementXpath.PreLoader, waitOption);
+                waitOption.Hidden = false;
+                var selectSport = await page.WaitForXPathAsync(_settings.Bet365.ElementXpath.Soccer, waitOption);
+                Thread.Sleep(3000);
+                await selectSport.ClickAsync();
+                Thread.Sleep(3000);
+                
+                var totalCatergoryHtml =  await page.GetContentAsync(); 
                 var attrs = HtmlHandler.GetImplement("TotalCatergory", totalCatergoryHtml).GetsAttributes(_totalCounrtyFilter);
                 var values = HtmlHandler.GetImplement("TotalCatergory", totalCatergoryHtml).Gets(_totalCounrtyFilter);
                 var catergoryData = (from a in attrs
@@ -70,29 +84,7 @@ namespace Felix.Bet365.NETCore.Crawler.Tasks
                 }
                 await raceDB.SaveChangesAsync();
 
-                //foreach (var countryKey in countryKeys)
-                //{
-
-                //var raceUrl = _config["Bet365Url:CountryUrl"];
-                //var data = await _engine.LoadHtml(string.Format(raceUrl, countryKey), JobTimeout);
-                //var attrs = HtmlHandler.GetImplement("Country", data).GetsAttributes(_elementFilter);
-                //foreach (var attr in attrs)
-                //{
-                //    var sport_key = attr.Value["data-sportskey"];
-                //    var totalRaceUrl = _config["Bet365Url:TotalRaceUrl"];
-                //    var raceDetailUrl = _config["Bet365Url:RaceDetailUrl"];
-                //    var raceHtmlData = await _engine.LoadHtml(string.Format(totalRaceUrl, attr.Value["data-sportskey"]), JobTimeout);
-
-                //    Func<XPathHandler, XPathHandler> _elementFilter2 = element => element.Find(TagEnum.Div, $"@class='liveAlertKey enhancedPod cc_65_5 forceopen'")
-                //                                                                         .Find(TagEnum.Div, "@data-fixtureid");
-
-                //    var totalRaceData = HtmlHandler.GetImplement("TotalRace", raceHtmlData).GetsAttributes(_elementFilter2);
-                //    var qq = totalRaceData.FirstOrDefault().Value["data-nav"].Split(',')[2];
-
-                //    var raceDetailHtmlData = await _engine.LoadHtml(string.Format(raceDetailUrl, qq), JobTimeout);
-                //}
-                //}
-
+        
             }
             return null;
         }

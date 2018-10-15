@@ -49,7 +49,7 @@
       </simple>
     </trigger>-->
 
-    <job>
+<!--<job>
       <name>MatchTask</name>
       <group>JobGroup</group>
       <job-type>Felix.Bet365.NETCore.Crawler.Tasks.MatchTask, Felix.Bet365.NETCore.Crawler</job-type>
@@ -67,7 +67,28 @@
         <repeat-count>-1</repeat-count>
         <repeat-interval>30000000</repeat-interval>
       </simple>
-    </trigger>
+    </trigger>-->
+
+ 
+    <job>
+      <name>OddsTask</name>
+      <group>JobGroup</group>
+      <job-type>Felix.Bet365.NETCore.Crawler.Tasks.OddsTask, Felix.Bet365.NETCore.Crawler</job-type>
+      <durable>true</durable>
+      <recover>false</recover>
+    </job>
+    <trigger>
+      <simple>
+        <name>OddsTask.Trigger</name>
+        <group>triggerGroup</group>
+        <description>Simple trigger to Parser</description>
+        <job-name>OddsTask</job-name>
+        <job-group>JobGroup</job-group>
+        <misfire-instruction>SmartPolicy</misfire-instruction>
+        <repeat-count>-1</repeat-count>
+        <repeat-interval>30000000</repeat-interval>
+      </simple>
+    </trigger>  
 
 
   </schedule>

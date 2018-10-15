@@ -32,6 +32,8 @@ namespace Felix.Bet365.NETCore.Crawler.Enum
         I,
         Item,
         P,
-        H3
+        H3,
+        H1,
+        EM
     }
 }
